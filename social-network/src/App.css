@@ -1,38 +1,65 @@
+.logo {
+	max-width: 100px;
+	position: absolute;
+    max-width: 100px;
+    height: 75%;
+}
+
 .App {
-  text-align: center;
+	display: grid;
+	grid-template-rows: 60px 1fr;
+	grid-template-columns: 2fr 10fr;
+	grid-template-areas:
+	  "header header"
+	  "nav main"
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App__header{
+	grid-area: header;
+	background-color: purple;
+	position: relative;
+}
+  
+.App__nav {
+	grid-area: nav;
+	background-color: gray;
+}
+  
+.App__main {
+	grid-area: main;
+	background-color: pink;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.main__content {
+	position: relative;
+	width: 100%;
+	height: 400px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.main__content img{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	
 }
 
-.App-link {
-  color: #61dafb;
+.profile {
+	display: flex;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.profile__img-container {
+	width: 200px;
+	position: relative;
+}
+
+.profile__avatar {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.profile__data-list {
+	list-style-type: none;
+	padding: 0;
 }
