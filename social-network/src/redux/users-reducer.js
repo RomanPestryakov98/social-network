@@ -4,20 +4,21 @@ const SET_USERS = "SET_USERS";
 
 const initialState = {
 	users: [
-		{ id: 1, followed: false, fullName: 'Roman', status: 'I am a boss', location: { country: 'Russia', city: 'Moscow' } },
-		{ id: 1, followed: true, fullName: 'Roman', status: 'I am a boss', location: { country: 'Russia', city: 'Moscow' } },
-		{ id: 1, followed: false, fullName: 'Roman', status: 'I am a boss', location: { country: 'Russia', city: 'Moscow' } },
+		{ id: 1, avatar: 'https://www.1zoom.ru/big2/500/289596-frederika.jpg', followed: false, fullName: 'Roman', status: 'I am a boss', location: { country: 'Russia', city: 'Moscow' } },
+		{ id: 2, avatar: 'https://www.1zoom.ru/big2/500/289596-frederika.jpg', followed: true, fullName: 'Roman', status: 'I am a boss', location: { country: 'Russia', city: 'Moscow' } },
+		{ id: 3, avatar: 'https://www.1zoom.ru/big2/500/289596-frederika.jpg', followed: false, fullName: 'Roman', status: 'I am a boss', location: { country: 'Russia', city: 'Moscow' } },
 	],
 };
 
 function usersReducer(state = initialState, action) {
+	console.log('!')
 	switch (action.type) {
 		case FOLLOW: {
 			return {
 				...state,
 				users: state.users.map(u => {
 					if (u.id === action.id) {
-						return { ...u, followed: true }
+						return { ...u, followed: false }
 					}
 					return u;
 				})
@@ -30,7 +31,7 @@ function usersReducer(state = initialState, action) {
 				...state,
 				users: state.users.map(u => {
 					if (u.id === action.id) {
-						return { ...u, followed: false }
+						return { ...u, followed: true }
 					}
 					return u;
 				})
