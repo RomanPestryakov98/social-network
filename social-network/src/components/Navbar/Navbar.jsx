@@ -12,7 +12,7 @@ function Navbar() {
 					<NavLink to="/dialogs">Dialogs</NavLink>
 				</li>
 				<li className="nav__item">
-					<NavLink to="/news">News</NavLink>
+					<NavLink to="/users">Users</NavLink>
 				</li>
 			</ul>
 		</nav>
