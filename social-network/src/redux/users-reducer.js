@@ -1,17 +1,20 @@
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SET_USERS";
+const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+const SET_TOTAL_COUNT_USERS = 'SET_TOTAL_COUNT_USERS';
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 
 const initialState = {
-	users: [
-		{ id: 1, avatar: 'https://www.1zoom.ru/big2/500/289596-frederika.jpg', followed: false, fullName: 'Roman', status: 'I am a boss', location: { country: 'Russia', city: 'Moscow' } },
-		{ id: 2, avatar: 'https://www.1zoom.ru/big2/500/289596-frederika.jpg', followed: true, fullName: 'Roman', status: 'I am a boss', location: { country: 'Russia', city: 'Moscow' } },
-		{ id: 3, avatar: 'https://www.1zoom.ru/big2/500/289596-frederika.jpg', followed: false, fullName: 'Roman', status: 'I am a boss', location: { country: 'Russia', city: 'Moscow' } },
-	],
+	users: [],
+	totalCount: 0,
+	currentPage: 1,
+	pageSize: 10,
+	isFetching: false
 };
 
 function usersReducer(state = initialState, action) {
-	console.log('!')
+
 	switch (action.type) {
 		case FOLLOW: {
 			return {
@@ -40,9 +43,31 @@ function usersReducer(state = initialState, action) {
 		}
 
 		case SET_USERS: {
+
 			return {
 				...state,
-				users: [...state.users, ...action.users]
+				users: [...action.users]
+			}
+		}
+
+		case SET_CURRENT_PAGE: {
+			return {
+				...state,
+				currentPage: action.page
+			}
+		}
+
+		case SET_TOTAL_COUNT_USERS: {
+			return {
+				...state,
+				totalCount: action.totalCount
+			}
+		}
+
+		case TOGGLE_IS_FETCHING: {
+			return {
+				...state,
+				isFetching: action.isFetching
 			}
 		}
 
@@ -50,10 +75,16 @@ function usersReducer(state = initialState, action) {
 	}
 }
 
-export const followAC = (id) => ({ type: FOLLOW, id });
+export const follow = (id) => ({ type: FOLLOW, id });
 
-export const unfollowAC = (id) => ({ type: UNFOLLOW, id });
+export const unFollow = (id) => ({ type: UNFOLLOW, id });
 
-export const setUsers = (users) => ({ type: UNFOLLOW, users });
+export const setUsers = (users) => ({ type: SET_USERS, users });
+
+export const setCurrentPage = (page) => ({ type: SET_CURRENT_PAGE, page });
+
+export const setTotalCountUsers = (totalCount) => ({ type: SET_TOTAL_COUNT_USERS, totalCount });
+
+export const setIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching });
 
 export default usersReducer;
