@@ -1,12 +1,17 @@
 import MyPostsContainer from './MyPosts/MyPostContainer';
 import './Profile.css';
+import photoUser from '../../image/user.jpg';
 
-function Profile() {
+function Profile(props) {
+	console.log(props?.profile?.photos?.small)
 	return (
 		<div className="main__profile profile">
 			<div className="profile__data">
-				<h2 className="profile__name">Roman</h2>
-				<ul className="profile__data-list">
+				<h2 className="profile__name">{props?.profile?.fullName}</h2>
+				<div className="profile__img">
+					<img src={props?.profile?.photos?.small ? props?.profile?.photos?.small : photoUser} alt='avatar' />
+				</div>
+				{/* <ul className="profile__data-list">
 					<li className="profile__item">
 						День Рождения:
 						<span>27 января</span>
@@ -23,7 +28,7 @@ function Profile() {
 						Веб-сайт:
 						<span>https://github.com/RomanPestryakov98</span>
 					</li>
-				</ul>
+				</ul> */}
 			</div>
 			<MyPostsContainer />
 		</div>

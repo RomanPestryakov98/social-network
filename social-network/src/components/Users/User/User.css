@@ -1,5 +1,10 @@
 .user {
 	display: flex;
+	margin-bottom: 20px;
+}
+
+.user:last-child {
+	margin-bottom: 0;
 }
 
 .user__left {

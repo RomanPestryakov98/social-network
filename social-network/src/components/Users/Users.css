@@ -1,0 +1,12 @@
+.users__page_active {
+	font-weight: bold;
+}
+
+.users__pagination {
+	display: flex;
+	gap: 4px;
+}
+
+.users__page {
+	cursor: pointer;
+}
