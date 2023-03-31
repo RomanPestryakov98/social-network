@@ -1,29 +1,17 @@
 import './Dialogs.css';
 import DialogItem from './DialogItem/DialogItem';
 import Messages from './Messages/Messages';
+import TextareaForm from '../TextareaForm/TextareaForm';
 
-function Dialogs(props) {
-	function onUpdateDialogMessage(e) {
-		props.onUpdateDialogMessage(e.target.value);
-	}
-
-	function sendMessage() {
-		props.onSendMessage()
-	}
-
+function Dialogs({ onSubmit, dialogsPage }) {
 	return (
 		<div className='dialogs-container'>
 			<ul className='dialogs-container__dialogs'>
-				{props.dialogsPage.dialogsUsers.map((user) => <DialogItem name={user.name} key={user.id} />)}
+				{dialogsPage.dialogsUsers.map((user) => <DialogItem name={user.name} key={user.id} />)}
 			</ul>
 			<ul className='dialogs-container__messages messages'>
-				{props.dialogsPage.messages.map((message) => <Messages message={message.message} key={message.id} />)}
-				<div className='dialogs-container__new-message'>
-					<textarea onChange={onUpdateDialogMessage} value={props.dialogsPage.messageText} />
-				</div>
-				<div>
-					<button onClick={sendMessage} className='dialogs-container__send-new-message'>Отправить сообщение</button>
-				</div>
+				{dialogsPage.messages.map((message) => <Messages message={message.message} key={message.id} />)}
+				<TextareaForm type='dialogs' onSubmit={onSubmit} />
 			</ul>
 
 		</div>

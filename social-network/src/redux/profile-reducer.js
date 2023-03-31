@@ -1,6 +1,9 @@
+import { usersAPI, profileAPI } from '../api/api';
+
 const ADD_POST = "ADD-POST";
-const UPDATE_TEXTAREA = "UPDATE-TEXTAREA";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
+const SET_USER_STATUS = "SET_USER_STATUS";
+const FAKE = "FAKE";
 
 const initialState = {
 	posts: [
@@ -8,24 +11,21 @@ const initialState = {
 		{ avatar: null, message: 'message post2' },
 		{ avatar: null, message: 'message post3' }
 	],
-	textareaText: '',
-	profile: null
+	profile: null,
+	status: '',
+	fake: 10
 };
 
 function profileReducer(state = initialState, action) {
 	switch (action.type) {
+		case FAKE: {
+			return { ...state, fake: state.fake + 1 }
+		}
+
 		case ADD_POST: {
 			return {
 				...state,
-				posts: [...state.posts, { avatar: null, message: state.textareaText }],
-				textareaText: ''
-
-			}
-		}
-		case UPDATE_TEXTAREA: {
-			return {
-				...state,
-				textareaText: action.message
+				posts: [...state.posts, { avatar: null, message: action.textarea }],
 			}
 		}
 
@@ -36,14 +36,41 @@ function profileReducer(state = initialState, action) {
 			}
 		}
 
+		case SET_USER_STATUS: {
+			return {
+				...state,
+				status: action.status === null ? '' : action.status
+			}
+		}
+
 		default: return state;
 	}
 }
 
-export const actionAddPostCreator = () => ({ type: ADD_POST });
-
-export const actionUpdateTextareaCreator = (message) => ({ type: UPDATE_TEXTAREA, message: message });
+//ACTIONS CREATE
+export const actionAddPostCreator = (textarea) => ({ type: ADD_POST, textarea });
 
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
+
+export const setUserStatus = (status) => ({ type: SET_USER_STATUS, status });
+
+//THUNK
+export const getUserProfile = (userId) => async (dispatch) => {
+	let response = await usersAPI.getUserProfile(userId)
+
+	dispatch(setUserProfile(response));
+}
+
+export const getUserStatus = (userId) => async (dispatch) => {
+	let response = await profileAPI.getUserStatus(userId)
+
+	dispatch(setUserStatus(response));
+}
+
+export const updateUserStatusThunk = (status) => async (dispatch) => {
+	let response = await profileAPI.updateUserStatus(status);
+
+	dispatch(setUserStatus(response));
+}
 
 export default profileReducer;

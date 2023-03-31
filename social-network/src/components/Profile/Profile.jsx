@@ -1,9 +1,12 @@
 import MyPostsContainer from './MyPosts/MyPostContainer';
 import './Profile.css';
 import photoUser from '../../image/user.jpg';
+import ProfileStatus from './ProfileStatus/ProfileStatus';
+import { useParams } from "react-router-dom";
+
 
 function Profile(props) {
-	console.log(props?.profile?.photos?.small)
+	const params = useParams();
 	return (
 		<div className="main__profile profile">
 			<div className="profile__data">
@@ -11,6 +14,8 @@ function Profile(props) {
 				<div className="profile__img">
 					<img src={props?.profile?.photos?.small ? props?.profile?.photos?.small : photoUser} alt='avatar' />
 				</div>
+
+				<ProfileStatus {...props} />
 				{/* <ul className="profile__data-list">
 					<li className="profile__item">
 						День Рождения:
@@ -30,7 +35,8 @@ function Profile(props) {
 					</li>
 				</ul> */}
 			</div>
-			<MyPostsContainer />
+			{!params.userId && <MyPostsContainer />}
+
 		</div>
 	);
 }

@@ -1,6 +1,17 @@
-import { actionAddPostCreator, actionUpdateTextareaCreator } from '../../../redux/profile-reducer';
+import { actionAddPostCreator } from '../../../redux/profile-reducer';
 import MyPosts from './MyPosts';
 import { connect } from 'react-redux';
+
+function MyPostsContainer(props) {
+	function onSubmit(textarea) {
+		props.actionAddPostCreator(textarea.post);
+
+	}
+
+	return (
+		<MyPosts {...props} onSubmit={onSubmit} />
+	)
+}
 
 let mapStateToProps = (state) => {
 	return {
@@ -8,19 +19,7 @@ let mapStateToProps = (state) => {
 	}
 }
 
-let mapDispatchToProps = (dispatch) => {
-	return {
-		onChangeTextarea: (text) => {
-			dispatch(actionUpdateTextareaCreator(text))
-		},
-		onAddPost: () => {
-			dispatch(actionAddPostCreator())
-		}
-	}
-}
 
-const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
-
-export default MyPostsContainer;
+export default connect(mapStateToProps, { actionAddPostCreator })(MyPostsContainer);
 
 
