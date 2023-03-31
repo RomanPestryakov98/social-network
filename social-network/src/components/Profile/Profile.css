@@ -4,7 +4,7 @@
 }
 
 .profile__img {
-	max-width: 300px;
+	width: 33%;
 	position: relative;
 	padding-bottom: 29%;
 }

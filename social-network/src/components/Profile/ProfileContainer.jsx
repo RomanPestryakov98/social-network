@@ -1,33 +1,46 @@
-import { setUserProfile } from '../../redux/profile-reducer';
+import { getUserProfile, getUserStatus, updateUserStatusThunk } from '../../redux/profile-reducer';
 import { connect } from 'react-redux';
 import React, { useEffect } from 'react';
-import axios from 'axios';
 import Profile from './Profile';
 import { useParams } from "react-router-dom";
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { compose } from 'redux';
+import { getProfileSelector, getProfileStatusSelector } from '../../redux/profile-selectors';
 
-function ProfileContainer(props) {
+function ProfileContainer({ setUserProfile, setUserStatus, updateUserStatusThunk, ...props }) {
 	const params = useParams();
 	useEffect(() => {
-		axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${params.userId}`)
-			.then(res => {
-				props.setUserProfile(res.data);
-			})
+		if (props.auth.isAuth && !params.userId) {
+			setUserProfile(props.auth.id);
+			setUserStatus(props.auth.id);
+		}
+		else {
+			setUserProfile(params.userId);
+			setUserStatus(params.userId);
+		}
 		// eslint-disable-next-line
 	}, [])
 
-	return (
-		<Profile {...props} />
-	)
 
+	function onUpdateStatus(status) {
+		updateUserStatusThunk(status)
+	}
+	return (
+		<Profile {...props} onUpdateStatus={onUpdateStatus} />
+	)
 }
 
 let mapStateToProps = (state) => {
 	return {
-		profile: state.profilePage.profile
+		profile: getProfileSelector(state),
+		status: getProfileStatusSelector(state),
 	}
 }
 
-export default connect(mapStateToProps, { setUserProfile })(ProfileContainer);
+export default compose(
+	connect(mapStateToProps, { setUserProfile: getUserProfile, setUserStatus: getUserStatus, updateUserStatusThunk }),
+	withAuthRedirect,
+)(ProfileContainer);
 
 
 

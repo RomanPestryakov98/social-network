@@ -14,7 +14,7 @@
 	  "nav main"
 }
 
-.App__header{
+.header{
 	grid-area: header;
 	background-color: purple;
 	position: relative;

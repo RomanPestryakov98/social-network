@@ -3,15 +3,8 @@ import React from 'react';
 import photoUser from '../../../image/user.jpg';
 import { NavLink } from 'react-router-dom';
 
-function User({ dataUser, unFollow, follow }) {
-	function onFollow() {
-		follow(dataUser.id)
-	}
-
-	function onUnFollow() {
-		unFollow(dataUser.id)
-	}
-
+function User({ dataUser, toggleFollowing, followingInProgress }) {
+	const btnDisabledClass = 'user__btn_disabled';
 	return (
 		<div className="user">
 			<div className='user__left'>
@@ -23,9 +16,9 @@ function User({ dataUser, unFollow, follow }) {
 
 				{dataUser.followed
 					?
-					<button onClick={onFollow} className='user__btn'>Отписаться</button>
+					<button disabled={followingInProgress.some(id => id === dataUser.id)} onClick={() => { toggleFollowing(dataUser.id, true) }} className={`user__btn ${followingInProgress.some(id => id === dataUser.id) ? btnDisabledClass : ''}`}>Отписаться</button>
 					:
-					<button onClick={onUnFollow} className='user__btn'>Подписаться</button>
+					<button disabled={followingInProgress.some(id => id === dataUser.id)} onClick={() => { toggleFollowing(dataUser.id, false) }} className={`user__btn ${followingInProgress.some(id => id === dataUser.id) ? btnDisabledClass : ''}`}>Подписаться</button>
 				}
 			</div>
 			<div className='user__data'>

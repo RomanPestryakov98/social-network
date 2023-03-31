@@ -1,6 +1,18 @@
-import { actionUpdateDialogMessageCreator, actionSendDialogMessageCreator } from '../../redux/dialogs-reducer';
+import { actionSendDialogMessageCreator } from '../../redux/dialogs-reducer';
 import Dialogs from './Dialogs';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+
+function DialogsContainer(props) {
+	function onSubmit(data) {
+		props.actionSendDialogMessageCreator(data.dialogs);
+	}
+
+	return (
+		<Dialogs {...props} onSubmit={onSubmit} />
+	)
+}
 
 let mapStateToProps = (state) => {
 	return {
@@ -8,17 +20,7 @@ let mapStateToProps = (state) => {
 	}
 }
 
-let mapDispatchToProps = (dispatch) => {
-	return {
-		onUpdateDialogMessage: (text) => {
-			dispatch(actionUpdateDialogMessageCreator(text))
-		},
-		onSendMessage: () => {
-			dispatch(actionSendDialogMessageCreator())
-		}
-	}
-}
-
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
-
-export default DialogsContainer;
+export default compose(
+	connect(mapStateToProps, { actionSendDialogMessageCreator }),
+	withAuthRedirect
+)(DialogsContainer);

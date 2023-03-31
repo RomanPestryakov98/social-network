@@ -1,0 +1,17 @@
+.pagination {
+	display: flex;
+	gap: 10px
+}
+
+.pagination__list {
+	display: flex;
+	gap: 4px;
+}
+
+.pagination__page_active {
+	font-weight: bold;
+}
+
+.pagination__page {
+	cursor: pointer;
+}

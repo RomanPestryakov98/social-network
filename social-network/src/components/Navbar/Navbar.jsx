@@ -6,13 +6,13 @@ function Navbar() {
 		<nav className="App__nav nav">
 			<ul className="nav__list">
 				<li className="nav__item">
-					<NavLink to="/profile">Profile</NavLink>
+					<NavLink to="/profile">Мой профиль</NavLink>
 				</li>
 				<li className="nav__item">
-					<NavLink to="/dialogs">Dialogs</NavLink>
+					<NavLink to="/dialogs">Диалоги</NavLink>
 				</li>
 				<li className="nav__item">
-					<NavLink to="/users">Users</NavLink>
+					<NavLink to="/users">Пользователи</NavLink>
 				</li>
 			</ul>
 		</nav>
