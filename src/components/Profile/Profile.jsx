@@ -9,6 +9,7 @@ function Profile(props) {
 	const params = useParams();
 	return (
 		<div className="main__profile profile">
+			12412412412
 			<div className="profile__data">
 				<h2 className="profile__name">{props?.profile?.fullName}</h2>
 				<div className="profile__img">
