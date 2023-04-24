@@ -6,7 +6,7 @@ import Preloader from '../common/Preloader/Preloader';
 import { Pagination } from 'antd';
 
 function Users(props) {
-	console.log(props.currentPage)
+
 	const listUsers = props.users.map(u => {
 		return <User key={u.id} dataUser={u} toggleFollowing={props.toggleFollowing} followingInProgress={props.followingInProgress} />
 	})

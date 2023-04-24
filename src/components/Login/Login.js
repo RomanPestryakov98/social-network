@@ -8,7 +8,6 @@ import './Login.css';
 import { Navigate } from "react-router-dom";
 
 function Login(props) {
-
 	function onSubmit(data) {
 		return props.login(data);
 	}
@@ -16,19 +15,22 @@ function Login(props) {
 	return (
 		!props.isAuth
 			?
-			<LoginForm {...props} onSubmit={onSubmit} />
+			<LoginForm {...props} onSubmit={onSubmit} captcha={props.captcha} />
 			:
 			<Navigate to='/profile' />
 	)
 }
 
-function LoginForm({ onSubmit, submitError }) {
+function LoginForm({ onSubmit, submitError, captcha }) {
 	const { register, setError, handleSubmit, formState: { errors } } = useForm({ mode: 'onChange' });
 
 	async function onHandleSubmit(data) {
 		const respones = await onSubmit(data);
-
-		if (respones?.resultCode === 1) {
+		if (respones?.resultCode !== 0) {
+			if (respones?.messages[0] === 'Incorrect anti-bot symbols') {
+				setError('captcha', { type: 'Symbols', message: respones.messages[0] });
+				return;
+			}
 			setError('email', { type: 'Unauthorized', message: respones.messages[0] });
 			setError('password', { type: 'Unauthorized', message: respones.messages[0] });
 			return;
@@ -66,6 +68,17 @@ function LoginForm({ onSubmit, submitError }) {
 				<input type="checkbox" {...register('rememberMe')} />
 				<span className='form__label-text'>Запомнить меня</span>
 			</div>
+			{captcha &&
+				<>
+					<img src={captcha} alt='captcha' />
+					<input type="text" {...register('captcha', {
+						required: 'Обязательное поле'
+					})} />
+					<span className='login__input-error'>
+						{errors?.captcha?.message}
+					</span>
+				</>
+			}
 			<div><input type="submit" value='Войти' /></div>
 			<p>{submitError && 'ошибка'}</p>
 		</form>
@@ -74,7 +87,8 @@ function LoginForm({ onSubmit, submitError }) {
 
 let mapStateToProps = (state) => {
 	return {
-		isAuth: state.auth.isAuth
+		isAuth: state.auth.isAuth,
+		captcha: state.auth.captcha
 	}
 }
 
