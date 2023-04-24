@@ -1,13 +1,15 @@
-import { authAPI } from "../api/api";
+import { authAPI, securityAPI } from "../api/api";
 
 const SET_AUTH = "SET_AUTH";
 const SET_SUBMIT_ERROR = "SET_SUBMIT_ERROR";
+const SET_CAPTCHA_SUCCESS = "SET_CAPTCHA_SUCCESS";
 
 const initialState = {
 	login: null,
 	id: null,
 	email: null,
-	isAuth: false
+	isAuth: false,
+	captcha: null
 };
 
 function authReducer(state = initialState, action) {
@@ -19,6 +21,14 @@ function authReducer(state = initialState, action) {
 			}
 		}
 
+		case SET_CAPTCHA_SUCCESS: {
+			return {
+				...state,
+				captcha: action.captcha
+			}
+		}
+
+
 		default: return state;
 	}
 }
@@ -26,6 +36,7 @@ function authReducer(state = initialState, action) {
 //ACTIONS CREATE
 export const setAuth = (data) => ({ type: SET_AUTH, data });
 export const setSubmitError = (submitError) => ({ type: SET_SUBMIT_ERROR, submitError });
+export const setCaptcha = (captcha) => ({ type: SET_CAPTCHA_SUCCESS, captcha });
 
 //THUNK
 export const getAuth = () => async (dispatch) => {
@@ -44,6 +55,9 @@ export const login = (data) => async (dispatch) => {
 		dispatch(getAuth());
 	}
 	else {
+		if (response.resultCode === 10) {
+			dispatch(getCaptcha());
+		}
 		return Promise.resolve(response)
 	}
 
@@ -56,6 +70,11 @@ export const logout = () => async (dispatch) => {
 		dispatch(setAuth({ login: null, id: null, email: null, isAuth: false }));
 	}
 
+}
+
+export const getCaptcha = () => async (dispatch) => {
+	const captcha = await securityAPI.getCaptcha();
+	dispatch(setCaptcha(captcha));
 }
 
 

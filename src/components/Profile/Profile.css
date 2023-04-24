@@ -1,12 +1,13 @@
 .profile {
 	display: flex;
 	flex-direction: column;
+	padding: 12px;
 }
 
 .profile__img {
-	width: 33%;
+	width: 100%;
 	position: relative;
-	padding-bottom: 29%;
+	padding-bottom: 100%;
 }
 
 .profile__img img {
@@ -16,4 +17,59 @@
 	left: 0;
 	top: 0;
 	object-fit: cover;
+}
+
+.profile__name {
+	margin: 0;
+	margin-top: 15px;
+}
+
+.profile__data {
+	display: flex;
+	gap: 30px;
+}
+
+.profile__left {
+	flex:  0 1 323px;
+}
+
+.profile__right {
+	flex:  1 1 auto;
+}
+
+.profile__right ul {
+	padding: 0;
+	margin: 0;
+}
+
+.profile__right ul ul {
+	padding: 0;
+	margin: 0;
+	margin-left: 10px;
+}
+
+
+.profile__right button {
+	margin-bottom: 10px;
+}
+
+.profile__right input[type="checkbox" i] {
+	margin: 0 !important;
+}
+
+.checkbox {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.top {
+	margin-top: 10px;
+}
+
+.form {
+	max-width: 320px;
+}
+
+.ant-upload-list-item-done {
+	display: none !important;
 }
